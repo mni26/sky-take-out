@@ -1,6 +1,5 @@
 package com.sky.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
 import com.sky.entity.Employee;
 import org.apache.ibatis.annotations.Insert;
@@ -35,4 +34,11 @@ public interface EmployeeMapper{
      * @return
      */
     Page<Employee> pageQuery(String name);
+
+    /**
+     * 员工账号启动停用
+     * @param employee
+     */
+//  update通用方法，传入的entity对象哪个属性不为null，就根据entity对象id更改其对应的值
+    void update(Employee employee);
 }

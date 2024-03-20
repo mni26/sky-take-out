@@ -111,4 +111,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(total,records);
     }
 
+
+    /**
+     * 员工账号启动停用
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+       //封装成一个entity对象传给dao方法
+//       Employee employee = new Employee();
+//       employee.setStatus(status);
+//       employee.setId(id);
+
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        //这里调用update通用方法，传入的entity对象哪个属性不为null，就根据entity对象id更改其对应的值
+        employeeMapper.update(employee);
+    }
 }
