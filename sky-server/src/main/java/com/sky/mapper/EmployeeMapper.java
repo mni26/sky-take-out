@@ -1,6 +1,7 @@
 package com.sky.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.pagehelper.Page;
 import com.sky.entity.Employee;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,5 +29,10 @@ public interface EmployeeMapper{
             "(#{name},#{username},#{password},#{phone},#{sex},#{idNumber},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})")
     void insert(Employee employee);
 
-
+    /**
+     * 分页查询
+     * @param name
+     * @return
+     */
+    Page<Employee> pageQuery(String name);
 }
