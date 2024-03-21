@@ -41,4 +41,8 @@ public interface EmployeeMapper{
      */
 //  update通用方法，传入的entity对象哪个属性不为null，就根据entity对象id更改其对应的值
     void update(Employee employee);
+
+
+    @Select("select * from sky_take_out.employee where id = #{id};")
+    Employee getById(Long id);
 }

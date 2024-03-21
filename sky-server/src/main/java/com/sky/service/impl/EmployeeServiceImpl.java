@@ -80,7 +80,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         BeanUtils.copyProperties(employeeDTO,employee);
 
         //补全剩余属性
-        employee.setPassword(PasswordConstant.DEFAULT_PASSWORD);
+        //密码进行md5加密后存储
+        employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes(StandardCharsets.UTF_8)));
         employee.setStatus(StatusConstant.ENABLE);
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
@@ -129,6 +130,37 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .id(id)
                 .build();
         //这里调用update通用方法，传入的entity对象哪个属性不为null，就根据entity对象id更改其对应的值
+        employeeMapper.update(employee);
+    }
+
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getById(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        return employee;
+    }
+
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     */
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        //将DTO封装成employee对象传入dao层
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee);
+
+        //修改操作，所以要更新其updatexxx属性值
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employee.setUpdateTime(LocalDateTime.now());
+
+        //调用dao层update通用方法
         employeeMapper.update(employee);
     }
 }
